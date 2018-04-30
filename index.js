@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const redis = require('redis')
-const PORT = process.env.PORT || '3000'
+const PORT = process.env.PORT || '4000'
 
 const app = express()
 const client = redis.createClient()
@@ -16,7 +16,7 @@ app.post('/messages', (req, res, next) => {
 
 app.get('/messages/:id', (req, res, next) => {
   client.get(req.params.id, (err, data) => {
-    if (err) {
+    if (data == null) {
       res.status(404).send('Resource not found')
       return
     }
